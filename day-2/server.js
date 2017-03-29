@@ -8,18 +8,12 @@ let listManagedGames = [];
 let run = function() {
   readdir('./sandwich/')
    .then(listFileNames => {
-     let listFilesToRead = [];
-     listFileNames.forEach((name) => {
-       listFilesToRead.push(readFile('./sandwich/' + name, 'utf8'));
-     })
-     return listFilesToRead;
+     return listFileNames.map(name => readFile('./sandwich/' + name, 'utf8'));
    })
    .then(Promise.all)
    .then(listFiles => {
-     listFiles.forEach((file) => {
-      listManagedGames.push(TicTacToeGame.fromJson(file))
-      })
-      console.log(listManagedGames)
+     let listManagedGames = listFiles.map(file => TicTacToeGame.fromJson(file));
+     console.log(listManagedGames)
     })
    .catch(e => console.error(e))
 };
