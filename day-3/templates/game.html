@@ -1,0 +1,54 @@
+{% extends "parentTemplate.html" %}
+{% block body %}
+
+{% macro renderLetter(num) %}
+  {% if num === 0 %}
+  &nbsp;&nbsp;&nbsp;
+  {% elif num === 1 %}
+  X
+  {% else %}
+  O
+  {% endif %}
+{% endmacro %}
+
+{% macro renderCell(game, num) %}
+{% if num !== 0 %}
+  {{ renderLetter(num)}}
+
+{% else %}
+  {% if not over %}
+    <form method="POST" action="/{{ index }}">
+      <input type="hidden" name="row" value="{{ row }}">
+      <input type="hidden" name="col" value="{{ col }}">
+      <button visibility="hidden"></button>
+  {% endif %}
+  {{ renderLetter(num) }}
+  {% if not over %}
+    </form>
+  {% endif %}
+{% endif %}
+
+{% endmacro %}
+
+<marquee><h1>Game {{ index }}</h1></marquee><br><br>
+
+{% if over %} THE GAME IS OVERRRRRRRRRRRRRRRRRRRR {% endif %}
+<BR>
+
+<table>
+  {% for row in range(3) %}
+  <tr>
+    {% for col in range(3) %}
+    <td>
+      {{ renderCell(game, game.board.whatsInThisSpace(row, col)) }}
+    </td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+
+<form method="POST" action="/{{ index }}">
+  <input type="hidden" name="X-HTTP-METHOD" value="delete">
+  <button>Delete me</button>
+</form>
+{% endblock %}

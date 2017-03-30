@@ -1,0 +1,22 @@
+{% extends "parentTemplate.html" %}
+{% block body %}
+
+{% include 'macros.html' %}
+{% import 'macros.html' as myMacros %}
+<!-- include basically runs the file. import exports the things defined in the file into a namespace. -->
+<title>Hi, Max</title>
+<marquee><h1>We have {{ numberGames }} games for you to play!</h1></marquee>
+<ul>
+  {% for game in games %}
+  {% if game %}
+    <li><a href="/{{ loop.index0 }}">
+      {% if not game.over %}
+      PLAY
+     {% else %} you can't play this sorrryyyyyyyy
+   {% endif %}</a></li>
+   {% endif %}
+  {% endfor %}
+
+</ul>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+
+{% macro personalizedMessage(humanFirst) %}
+A FIGHT TO THE DEATH where
+{% if game.humanFirst %}
+  you
+{% else %}
+  the computer
+{% endif %}
+went first.
+{% endmacro %}
